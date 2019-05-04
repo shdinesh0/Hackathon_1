@@ -1,0 +1,56 @@
+# Heatmap code:-
+
+plt.figure(figsize=(12,8))
+sns.heatmap(campaign_data.corr(), annot = True)
+
+#making multicolinearity by dropping highly correlated columns
+campaign_data.drop(["emp.var.rate","cons.price.idx"],axis = 1)
+
+Campaign_data_outlier = campaign_data[['age', 'duration', 'campaign', 'pdays', 'cons.conf.idx', 'euribor3m', 'nr.employed']].copy()
+Campaign_data_outlier.head(5)
+
+# determine outlier using Zscore
+z = np.abs(stats.zscore(Campaign_data_outlier))
+print(z)
+threshold = 3
+print(np.where(z > 3))
+
+# COULD NOT remove outlier 
+
+# Subbplot below with boxplots
+
+plt.figure(figsize=[16,12])
+
+plt.subplot(231)
+plt.boxplot(x=campaign_data['age'], showmeans = True, meanline = True)
+plt.title('Age Boxplot')
+plt.ylabel('Age')
+
+plt.subplot(232)
+plt.boxplot(campaign_data['campaign'], showmeans = True, meanline = True)
+plt.title('Campaign Boxplot')
+plt.ylabel('Campaign')
+
+
+plt.subplot(233)
+plt.boxplot(campaign_data['pdays'], showmeans = True, meanline = True)
+plt.title('pdays Boxplot')
+plt.ylabel('pdays')
+
+
+plt.subplot(234)
+plt.boxplot(campaign_data['cons.conf.idx'], showmeans = True, meanline = True)
+plt.title('cons.conf.idx Boxplot')
+plt.ylabel('cons.conf.idx')
+
+
+plt.subplot(235)
+plt.boxplot(campaign_data['euribor3m'], showmeans = True, meanline = True)
+plt.title('euribor3m Boxplot')
+plt.ylabel('euribor3m')
+
+
+plt.subplot(236)
+plt.boxplot(campaign_data['nr.employed'], showmeans = True, meanline = True)
+plt.title('nr.employed Boxplot')
+plt.ylabel('nr.employed')
